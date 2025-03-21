@@ -7,3 +7,8 @@ members = [
 ]
 
 resolver = "2"
+
+# Optional: define common features at workspace level
+[workspace.dependencies]
+libcamera-sys = { path = "./libcamera-sys", features = ["libcamera-0-4"] }
+libcamera = { path = "./libcamera" }

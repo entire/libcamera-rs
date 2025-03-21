@@ -88,4 +88,26 @@ fn main() {
     bindings
         .write_to_file(out_path.join("bindings_cpp.rs"))
         .expect("Couldn't write bindings!");
+
+    let mut builder = bindgen::Builder::default()
+        .clang_arg("-std=c++17")
+        .clang_arg("-x")
+        .clang_arg("c++")
+        .derive_debug(true)
+        .derive_default(true)
+        .allowlist_type("libcamera::.*")
+        .allowlist_function("libcamera::.*")
+        .opaque_type("std::.*")
+        .blocklist_type("std::.*")
+        .blocklist_function("libcamera::FrameBufferAllocator::.*");
+
+    #[cfg(feature = "libcamera-0-4")]
+    {
+        println!("cargo:rustc-cfg=libcamera_0_4");
+    }
+
+    let bindings = builder.generate().expect("Unable to generate bindings");
+    bindings
+        .write_to_file(out_path.join("bindings_0_4.rs"))
+        .expect("Couldn't write bindings!");
 }

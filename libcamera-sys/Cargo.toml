@@ -17,6 +17,11 @@ doctest = false
 [dependencies]
 
 [build-dependencies]
-bindgen = "0.66.1"
+bindgen = "0.69.1"
 pkg-config = "0.3.26"
 cc = "1.0"
+
+[features]
+default = []
+# Add the feature flag for libcamera 0.4.0 compatibility
+libcamera-0-4 = []
